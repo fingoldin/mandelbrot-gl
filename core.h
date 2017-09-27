@@ -93,13 +93,13 @@ void Core::begin(const char * winName)
 {
     this->gl_context_version_major = 4;
     this->gl_context_version_minor = 1;
-    this->gl_samples = 1;
+    this->gl_samples = 2;
     this->gl_opengl_profile = GLFW_OPENGL_CORE_PROFILE;
     this->gl_resizable = GL_FALSE;
     this->gl_opengl_forward_compat = GL_TRUE;
 
     this->window_width = 1920;
-    this->window_height = 1080;
+    this->window_height = 1200;
     this->viewport_x = 0;
     this->viewport_y = 0;
     this->viewport_w = this->window_width;
@@ -162,6 +162,7 @@ void Core::update()
     bool shouldrender = false;
 
     if(InputHandler::getKey(GLFW_KEY_UP)) {
+        printf("key up\n");
         this->zoom = this->zoom * 0.99L;
         shouldrender = true;
     }
@@ -262,7 +263,7 @@ void Core::init_gl(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, this->gl_context_version_minor);
     glfwWindowHint(GLFW_SAMPLES, this->gl_samples);
     glfwWindowHint(GLFW_OPENGL_PROFILE, this->gl_opengl_profile);
-    glfwWindowHint(GLFW_RESIZABLE, gl_resizable);
+    glfwWindowHint(GLFW_RESIZABLE, this->gl_resizable);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, this->gl_opengl_forward_compat);
 
     if(this->fullscreen)
@@ -276,7 +277,7 @@ void Core::init_gl(void)
     );
     glfwMakeContextCurrent(this->window);
 
-    glfwSetKeyCallback(window, InputHandler::key_callback);
+    glfwSetKeyCallback(this->window, InputHandler::key_callback);
     //glfwSetCursorPosCallback(window, this->mouse_callback);
     //glfwSetScrollCallback(window, this->scroll_callback);
 
