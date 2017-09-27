@@ -85,6 +85,8 @@ private:
 
     long double center_z[2];
     long double zoom;
+
+    bool firstupdate;
 };
 
 void Core::begin(const char * winName)
@@ -130,6 +132,8 @@ void Core::begin(const char * winName)
     this->center_z[0] = 0.275f;
     this->center_z[1] = 0.0f;
     this->zoom = 0.6f;
+
+    this->firstupdate = true;
 
     InputHandler::begin();
 }
@@ -202,7 +206,7 @@ void Core::update()
         shouldrender = false;
     }
 
-    if(shouldrender)
+    if(shouldrender || firstupdate)
     {
         GLfloat stime = glfwGetTime();
 
@@ -224,6 +228,9 @@ void Core::update()
 
         printf("Render time: %.2f millis   Center: %.16Lf %.16Lf   Zoom: %.16Lf   Iters: %d\n", dtime * 1000.0f, this->center_z[0], this->center_z[1], this->zoom, this->max_iters);
     }
+
+    if(firstupdate)
+        firstupdate = false;
 }
 
 void Core::render(void)
