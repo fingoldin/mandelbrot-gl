@@ -69,6 +69,8 @@ private:
     GLfloat * vertices;
 
     GLint max_iters;
+    GLint max_max_iters;
+    GLint min_max_iters;
 
     std::string window_name;
 
@@ -126,6 +128,8 @@ void Core::begin(const char * winName)
     this->init_shaders();
 
     this->max_iters = 256;
+    this->max_max_iters = 2048;
+    this->min_max_iters = 10;
 
     this->current_shader = this->mandelbrot_shader;
 
@@ -162,12 +166,11 @@ void Core::update()
     bool shouldrender = false;
 
     if(InputHandler::getKey(GLFW_KEY_UP)) {
-        printf("key up\n");
-        this->zoom = this->zoom * 0.99L;
+        this->zoom = this->zoom * 0.9L;
         shouldrender = true;
     }
     else if(InputHandler::getKey(GLFW_KEY_DOWN)) {
-        this->zoom = this->zoom / 0.99L;
+        this->zoom = this->zoom / 0.9L;
         shouldrender = true;
     }
 
@@ -193,13 +196,17 @@ void Core::update()
 
     if(InputHandler::getKey(GLFW_KEY_X)) {
         this->max_iters = (this->max_iters * 10) / 9;
+	if(this->max_iters > this->max_max_iters)
+	    this->max_iters = this->max_max_iters;
+
         shouldrender = true;
     }
     else if(InputHandler::getKey(GLFW_KEY_Z)) {
         this->max_iters = (9 * this->max_iters) / 10;
-        if(this->max_iters < 10)
-            this->max_iters = 10;
-        shouldrender = true;
+	if(this->max_iters < this->min_max_iters)
+            this->max_iters = this->min_max_iters;
+
+	shouldrender = true;
     }
 
     if(InputHandler::getKey(GLFW_KEY_ESCAPE)) {
@@ -322,5 +329,24 @@ void Core::init_shaders(void)
     glEnableVertexAttribArray(0);
 }
 
+/*void Core::init_screenshot(void)
+{
+    glGenFrameBuffers(1, &this->framebufferID);
+    glBindFrameBuffer(GL_FRAMEBUFFER, this->framebufferID);
 
+    glGenTextures(1, &this->screenshotTexture);
+    glBindTexture(GL_TEXTURE_2D, this->screenshotTexture);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->window_width, this->window_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, this->screenshotTexture, 0);
+
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        printf("Could not create screenshot framebuffer\n");
+        
+
+*/
 #endif
