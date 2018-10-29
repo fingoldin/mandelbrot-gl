@@ -15,3 +15,5 @@ Donw arrow key: Zoom out (divide zoom factor by 0.9)
 
 ![](https://www.github.com/fingoldin/mandelbrot-gl/raw/master/image.png)
 ![](https://www.github.com/fingoldin/mandelbrot-gl/raw/master/image2.png)
+
+Both images were rendered with a maximum of 256 iterations
