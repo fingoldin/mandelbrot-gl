@@ -5,11 +5,11 @@ A real-time, navigable mandelbrot set renderer using only OpenGL calls.
 ## Usage
 
 run `make` in this directory. Then, run `mandelbrot-gl`. Navigate using the following keys:
-`WASD`: Move the center of the viewport around
-Up arrow key: Zoom in (multiply zoom factor by 0.9)
-Donw arrow key: Zoom out (divide zoom factor by 0.9)
-`z`: Decrease max iterations (multiply by a factor of 0.9)
-`x`: Increase max iterations (divide by a factor of 0.9)
+- `WASD`: Move the center of the viewport around
+- Up arrow key: Zoom in (multiply zoom factor by 0.9)
+- Down arrow key: Zoom out (divide zoom factor by 0.9)
+- `z`: Decrease max iterations (multiply by a factor of 0.9)
+- `x`: Increase max iterations (divide by a factor of 0.9)
 
 ## Screenshots
 
